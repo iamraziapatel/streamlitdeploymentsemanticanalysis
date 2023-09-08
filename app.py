@@ -1,8 +1,14 @@
+
 import streamlit as st
 import joblib
 import re
 import string
 import spacy
+import sys
+import subprocess
+
+# Run setup script
+subprocess.run(["bash", "setup.sh"])
 
 # Load the spaCy language model
 nlp = spacy.load("en_core_web_sm")
@@ -12,6 +18,7 @@ model = joblib.load('xgboost_model.pkl')
 label_encoder = joblib.load('label_encoder.pkl')
 # Load the TfidfVectorizer (or other transformer)
 tfidfvect = joblib.load('tfidfvect.pkl')
+
 
 # Define the preprocess function using spaCy tokenizer
 def preprocess_text(text):
@@ -40,6 +47,7 @@ def preprocess_text(text):
     # Return the preprocessed text as a single string
     return preprocessed_text
 
+
 def main():
     st.title("Semantic Analysis of tweets")
 
@@ -67,5 +75,7 @@ def main():
         except Exception as e:
             st.error(f"An error occurred: {str(e)}")
 
+
 if __name__ == '__main__':
     main()
+
